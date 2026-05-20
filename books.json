@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1,
+    "title": "Clean Code",
+    "author": "Robert Martin",
+    "available": true
+  },
+  {
+    "id": 2,
+    "title": "Python Crash Course",
+    "author": "Eric Matthes",
+    "available": true
+  }
+]
