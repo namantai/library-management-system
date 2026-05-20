@@ -1,62 +1,86 @@
-from services.file_service import load_data, save_data
+from services.file_service import FileService
 
-def show_available_books():
-    books = load_data("books.json")
+class LibraryService:
+    def __init__(self):
+        self.books_file = "books.json"
+        self.users_file = "users.json"
 
-    print("\nAvailable Books:")
-    for book in books:
-        if book["available"]:
-            print(f'{book["id"]}. {book["title"]}')
+    def add_book(self, title, author):
+        books = FileService.load(self.books_file)
+        new_id = len(books) + 1
 
+        books.append({
+            "id": new_id,
+            "title": title,
+            "author": author,
+            "available": True
+        })
 
-def borrow_book(user_id, book_id):
-    books = load_data("books.json")
-    users = load_data("users.json")
+        FileService.save(self.books_file, books)
+        print("Book added")
 
-    for book in books:
-        if book["id"] == book_id:
+    def show_available_books(self):
+        books = FileService.load(self.books_file)
 
-            if not book["available"]:
-                print("Book is unavailable")
-                return
+        available = filter(lambda b: b["available"], books)
 
-            for user in users:
-                if user["user_id"] == user_id:
+        for book in available:
+            print(f'{book["id"]}: {book["title"]}')
 
-                    if book_id in user["borrowed_books"]:
-                        print("Already borrowed")
-                        return
+    def borrow_book(self, user_id, book_id):
+        books = FileService.load(self.books_file)
+        users = FileService.load(self.users_file)
 
-                    book["available"] = False
-                    user["borrowed_books"].append(book_id)
-                    user["history"].append(f"Borrowed book {book_id}")
-
-                    save_data("books.json", books)
-                    save_data("users.json", users)
-
-                    print("Book borrowed successfully")
+        for book in books:
+            if book["id"] == book_id:
+                if not book["available"]:
+                    print("Unavailable")
                     return
 
+                for user in users:
+                    if user["user_id"] == user_id:
+                        borrowed = set(user["borrowed_books"])
 
-def return_book(user_id, book_id):
-    books = load_data("books.json")
-    users = load_data("users.json")
+                        if book_id in borrowed:
+                            print("Already borrowed")
+                            return
 
-    for book in books:
-        if book["id"] == book_id:
-            for user in users:
-                if user["user_id"] == user_id:
+                        book["available"] = False
+                        user["borrowed_books"].append(book_id)
+                        user["history"].append(f"Borrowed {book_id}")
 
-                    if book_id not in user["borrowed_books"]:
-                        print("Book was not borrowed")
+                        FileService.save(self.books_file, books)
+                        FileService.save(self.users_file, users)
+
+                        print("Success")
                         return
 
-                    book["available"] = True
-                    user["borrowed_books"].remove(book_id)
-                    user["history"].append(f"Returned book {book_id}")
+    def return_book(self, user_id, book_id):
+        books = FileService.load(self.books_file)
+        users = FileService.load(self.users_file)
 
-                    save_data("books.json", books)
-                    save_data("users.json", users)
+        for book in books:
+            if book["id"] == book_id:
+                for user in users:
+                    if user["user_id"] == user_id:
+                        if book_id not in user["borrowed_books"]:
+                            print("Not borrowed")
+                            return
 
-                    print("Book returned successfully")
-                    return
+                        book["available"] = True
+                        user["borrowed_books"].remove(book_id)
+                        user["history"].append(f"Returned {book_id}")
+
+                        FileService.save(self.books_file, books)
+                        FileService.save(self.users_file, users)
+
+                        print("Returned")
+                        return
+
+    def show_user_history(self, user_id):
+        users = FileService.load(self.users_file)
+
+        for user in users:
+            if user["user_id"] == user_id:
+                for action in user["history"]:
+                    print(action)

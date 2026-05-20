@@ -1,9 +1,15 @@
 import json
+import os
 
-def load_data(filename):
-    with open(filename, "r") as file:
-        return json.load(file)
+class FileService:
+    @staticmethod
+    def load(filename):
+        if not os.path.exists(filename):
+            return []
+        with open(filename, "r") as file:
+            return json.load(file)
 
-def save_data(filename, data):
-    with open(filename, "w") as file:
-        json.dump(data, file, indent=4)
+    @staticmethod
+    def save(filename, data):
+        with open(filename, "w") as file:
+            json.dump(data, file, indent=4)
