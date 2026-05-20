@@ -1,7 +1,7 @@
 # Library Management System
 
 ## Project Description
-The Library Management System is a Python-based application designed to manage books and users in a library environment. The system allows users to borrow and return books, track book availability, and maintain borrowing history.
+The Library Management System is a Python-based application designed to manage books and users in a library environment. The system allows users to borrow and return books, track book availability and maintain borrowing history.
 
 ## Features
 - Add and manage books
@@ -35,4 +35,4 @@ The Library Management System is a Python-based application designed to manage b
 3. Run `main.py`
 
 ## Conclusion
-This project demonstrates the use of Python programming concepts, including OOP, file handling, modular programming, and testing in a real-world library management scenario.
+This project demonstrates the use of Python programming concepts, including OOP, file handling, modular programming and testing in a real-world library management scenario.
