@@ -1,9 +1,7 @@
-from utils.validators import validate_book_id
+from utils.validators import validate_positive_id
 
+def test_valid_id():
+    assert validate_positive_id(1) == True
 
-def test_valid_book_id():
-    assert validate_book_id(1) == True
-
-
-def test_invalid_book_id():
-    assert validate_book_id(-5) == False
+def test_invalid_id():
+    assert validate_positive_id(-1) == False
