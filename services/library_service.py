@@ -7,6 +7,7 @@ class LibraryService:
 
     def add_book(self, title, author):
         books = FileService.load(self.books_file)
+
         new_id = len(books) + 1
 
         books.append({
@@ -17,15 +18,16 @@ class LibraryService:
         })
 
         FileService.save(self.books_file, books)
-        print("Book added")
+        print("Book added successfully")
 
     def show_available_books(self):
         books = FileService.load(self.books_file)
 
         available = filter(lambda b: b["available"], books)
 
+        print("\nAvailable Books:")
         for book in available:
-            print(f'{book["id"]}: {book["title"]}')
+            print(f'{book["id"]}: {book["title"]} by {book["author"]}')
 
     def borrow_book(self, user_id, book_id):
         books = FileService.load(self.books_file)
@@ -33,27 +35,31 @@ class LibraryService:
 
         for book in books:
             if book["id"] == book_id:
+
                 if not book["available"]:
-                    print("Unavailable")
+                    print("Book is unavailable")
                     return
 
                 for user in users:
                     if user["user_id"] == user_id:
+
                         borrowed = set(user["borrowed_books"])
 
                         if book_id in borrowed:
-                            print("Already borrowed")
+                            print("Book already borrowed")
                             return
 
                         book["available"] = False
                         user["borrowed_books"].append(book_id)
-                        user["history"].append(f"Borrowed {book_id}")
+                        user["history"].append(f"Borrowed book {book_id}")
 
                         FileService.save(self.books_file, books)
                         FileService.save(self.users_file, users)
 
-                        print("Success")
+                        print("Book borrowed successfully")
                         return
+
+        print("User or book not found")
 
     def return_book(self, user_id, book_id):
         books = FileService.load(self.books_file)
@@ -61,26 +67,46 @@ class LibraryService:
 
         for book in books:
             if book["id"] == book_id:
+
                 for user in users:
                     if user["user_id"] == user_id:
+
                         if book_id not in user["borrowed_books"]:
-                            print("Not borrowed")
+                            print("This book was not borrowed")
                             return
 
                         book["available"] = True
                         user["borrowed_books"].remove(book_id)
-                        user["history"].append(f"Returned {book_id}")
+                        user["history"].append(f"Returned book {book_id}")
 
                         FileService.save(self.books_file, books)
                         FileService.save(self.users_file, users)
 
-                        print("Returned")
+                        print("Book returned successfully")
                         return
+
+        print("User or book not found")
 
     def show_user_history(self, user_id):
         users = FileService.load(self.users_file)
 
         for user in users:
             if user["user_id"] == user_id:
+                print("\nUser History:")
                 for action in user["history"]:
                     print(action)
+
+    def show_statistics(self):
+        books = FileService.load(self.books_file)
+        users = FileService.load(self.users_file)
+
+        total_books = len(books)
+        available_books = len(list(filter(lambda b: b["available"], books)))
+        borrowed_books = total_books - available_books
+        total_users = len(users)
+
+        print("\n=== Library Statistics ===")
+        print(f"Total books: {total_books}")
+        print(f"Available books: {available_books}")
+        print(f"Borrowed books: {borrowed_books}")
+        print(f"Registered users: {total_users}")
