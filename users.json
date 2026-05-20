@@ -1,8 +1,24 @@
 [
-  {
-    "user_id": 1,
-    "name": "Alice",
-    "borrowed_books": [],
-    "history": []
-  }
+    {
+        "user_id": 1,
+        "name": "Dauren",
+        "borrowed_books": [],
+        "history": [
+            "Borrowed book 1",
+            "Returned book 2"
+        ]
+    },
+    {
+        "user_id": 2,
+        "name": "Yerdan",
+        "borrowed_books": [],
+        "history": []
+    },
+    {
+        "user_id": 3,
+        "name": "Yerassyl",
+        "borrowed_books": [],
+        "history": []
+    }
+
 ]
