@@ -105,7 +105,7 @@ class LibraryService:
         borrowed_books = total_books - available_books
         total_users = len(users)
 
-        print("\n=== Library Statistics ===")
+        print("\nLibrary Statistics")
         print(f"Total books: {total_books}")
         print(f"Available books: {available_books}")
         print(f"Borrowed books: {borrowed_books}")
