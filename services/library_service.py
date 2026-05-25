@@ -1,5 +1,5 @@
 from services.file_service import FileService
-
+from utils.validators import validate_positive_id
 class LibraryService:
     def __init__(self):
         self.books_file = "books.json"
@@ -30,6 +30,9 @@ class LibraryService:
             print(f'{book["id"]}: {book["title"]} by {book["author"]}')
 
     def borrow_book(self, user_id, book_id):
+        if not validate_positive_id(user_id) or not validate_positive_id(book_id):
+            print("Invalid user_id or book_id")
+            return
         books = FileService.load(self.books_file)
         users = FileService.load(self.users_file)
 
@@ -62,6 +65,9 @@ class LibraryService:
         print("User or book not found")
 
     def return_book(self, user_id, book_id):
+        if not validate_positive_id(user_id) or not validate_positive_id(book_id):
+            print("Invalid user_id or book_id")
+            return
         books = FileService.load(self.books_file)
         users = FileService.load(self.users_file)
 
@@ -88,6 +94,9 @@ class LibraryService:
         print("User or book not found")
 
     def show_user_history(self, user_id):
+        if not validate_positive_id(user_id):
+            print("Invalid user_id")
+            return
         users = FileService.load(self.users_file)
 
         for user in users:
@@ -95,6 +104,7 @@ class LibraryService:
                 print("\nUser History:")
                 for action in user["history"]:
                     print(action)
+        print("User not found")
 
     def show_statistics(self):
         books = FileService.load(self.books_file)
