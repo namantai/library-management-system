@@ -24,10 +24,10 @@ The Library Management System is a Python-based application designed to manage b
 - `tests/` – unit tests
 
 ## Team Members
-- Student 1 – Book Management
-- Student 2 – User Management
-- Student 3 – Borrow/Return Logic
-- Student 4 – Testing and Integration
+- Student 1 – Classes & Data Models
+- Student 2 – Business Logic
+- Student 3 – Utilities & Testing
+- Student 4 – Application Integration
 
 ## How to Run
 1. Clone the repository
