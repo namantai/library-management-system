@@ -4,12 +4,7 @@
         "name": "Dauren",
         "borrowed_books": [],
         "history": [
-<<<<<<< HEAD
-            "Borrowed book 1"
-=======
-            "Borrowed book 1",
-            "Returned book 2"
->>>>>>> 168eaff68255e7392780be9b2c9916a7b1469a23
+          "Borrowed book 1" 
         ]
     },
     {
