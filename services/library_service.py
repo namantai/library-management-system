@@ -104,6 +104,7 @@ class LibraryService:
                 print("\nUser History:")
                 for action in user["history"]:
                     print(action)
+                return
         print("User not found")
 
     def show_statistics(self):
